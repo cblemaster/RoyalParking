@@ -1,8 +1,6 @@
-﻿using RoyalParking.Core.Interfaces;
+﻿namespace RoyalParking.Core.DTO;
 
-namespace RoyalParking.Core.DTO;
-
-public class RegisterUserDTO : IReturnable
+public class RegisterUserDTO
 {
     public required string Username { get; init; }
     public required string Password { get; init; }

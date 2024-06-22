@@ -56,7 +56,7 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Welcome to Royal Parking!");
 
-app.MapPost("/user/register", async Task<Results<BadRequest<InvalidInputResponse>,
+app.MapPost("/user/register", async Task<Results<BadRequest<string>,
     Created<UserDTO>, ProblemHttpResult>> (DbContext context, RegisterUserDTO dto,
     IPasswordHasher passwordHasher) =>
 {
@@ -65,8 +65,7 @@ app.MapPost("/user/register", async Task<Results<BadRequest<InvalidInputResponse
         ValidateRegisterUserDTO.Validate(dto);
     if (validationResults.Any(v => !v.IsValid))
     {
-        return TypedResults.BadRequest(new InvalidInputResponse()
-        { Message = GetErrorsAsString(validationResults) });
+        return TypedResults.BadRequest(GetErrorsAsString(validationResults));
     }
     // hash the password
     PasswordHash hash = passwordHasher.ComputeHash(dto.Password);
@@ -97,8 +96,8 @@ app.MapPost("/user/register", async Task<Results<BadRequest<InvalidInputResponse
     }
 });
 
-app.MapPost("/user/login", async Task<Results<BadRequest<InvalidInputResponse>,
-    UnauthorizedHttpResult, Created<UserDTO>>> (DbContext context, LoginUserDTO loginDTO,
+app.MapPost("/user/login", async Task<Results<BadRequest<string>,
+    UnauthorizedHttpResult, Ok<UserDTO>>> (DbContext context, LoginUserDTO loginDTO,
     IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator) =>
 {
     // validate the dto
@@ -106,8 +105,7 @@ app.MapPost("/user/login", async Task<Results<BadRequest<InvalidInputResponse>,
         ValidateLoginUserDTO.Validate(loginDTO);
     if (validationResults.Any(v => !v.IsValid))
     {
-        return TypedResults.BadRequest(new InvalidInputResponse()
-        { Message = GetErrorsAsString(validationResults) });
+        return TypedResults.BadRequest(GetErrorsAsString(validationResults));
     }
 
     // look for a matching user by username
@@ -136,7 +134,7 @@ app.MapPost("/user/login", async Task<Results<BadRequest<InvalidInputResponse>,
 
         authUserDTO.Token = token;
 
-        return TypedResults.Created($"/user/{authUserDTO.Id}", authUserDTO);
+        return TypedResults.Ok(authUserDTO);
     }
 });
 
