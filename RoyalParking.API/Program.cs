@@ -49,7 +49,7 @@ builder.Services.AddAuthentication(x =>
     .AddPolicy("allrolespolicy", policy => policy.RequireRole("customer", "valet"))
 .Services.AddDbContext<DbContext>(options =>
     options.UseSqlServer(connectionString))
-//.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(jwtSecret))
+.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(jwtSecret))
 .AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
 
 var app = builder.Build();
@@ -86,13 +86,57 @@ app.MapPost("/user/register", async Task<Results<BadRequest<InvalidInputResponse
         context.Users.Add(createUser);
         await context.SaveChangesAsync();
 
-        return TypedResults.Created("", EntityToDTO.MapUserToUserDTO(await context.
-            Users.Include(u => u.Customer).Include(u => u.Valet)
-            .SingleOrDefaultAsync(u => u.Id == createUser.Id)));
+        return TypedResults.Created($"/user/{createUser.Id}", 
+            EntityToDTO.MapUserToUserDTO(await context.
+                Users.Include(u => u.Customer).Include(u => u.Valet)
+                .SingleOrDefaultAsync(u => u.Id == createUser.Id)));
     }
     catch (Exception)
     {
-        return TypedResults.Problem("Error registering the new user");
+        return TypedResults.Problem("Error registering the new user.");
+    }
+});
+
+app.MapPost("/user/login", async Task<Results<BadRequest<InvalidInputResponse>, 
+    UnauthorizedHttpResult, Created<UserDTO>>> (DbContext context, LoginUserDTO loginDTO,
+    IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator) =>
+{
+    // validate the dto
+    IEnumerable<ValidationResult> validationResults =
+        ValidateLoginUserDTO.Validate(loginDTO);
+    if (validationResults.Any(v => !v.IsValid))
+    {
+        return TypedResults.BadRequest(new InvalidInputResponse()
+        { Message = GetErrorsAsString(validationResults) });
+    }
+
+    // look for a matching user by username
+    User existingUser = (await context.Users
+        .Include(u => u.Customer).Include(u => u.Valet)
+        .SingleOrDefaultAsync(u => u.Username == loginDTO.Username));
+
+    if (existingUser == null)
+    {
+        return TypedResults.Unauthorized();
+    }
+
+    if (!passwordHasher.VerifyHashMatch(existingUser.PasswordHash, 
+        loginDTO.Password, existingUser.Salt))
+    {
+        return TypedResults.Unauthorized();
+    }
+    else
+    {
+        string token = tokenGenerator.GenerateToken(existingUser.Id, 
+            existingUser.Username, 
+            existingUser.Customer is not null ? "customer"
+            : (existingUser.Valet is not null ? "valet" : "unknown role"));
+
+        UserDTO authUserDTO = EntityToDTO.MapUserToUserDTO(existingUser);
+
+        authUserDTO.Token = token;
+
+        return TypedResults.Created($"/user/{authUserDTO.Id}", authUserDTO);
     }
 });
 

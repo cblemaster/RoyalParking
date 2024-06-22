@@ -14,4 +14,5 @@ public class UserDTO : IReturnable
     public DateTime? UpdateDate { get; init; }
     public int? CustomerId { get; init; }
     public int? ValetId { get; init; }
+    public string? Token { get; set; }
 }
