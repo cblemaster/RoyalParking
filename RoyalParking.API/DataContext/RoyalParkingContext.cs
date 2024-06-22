@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RoyalParking.API.Entities;
+using RoyalParking.Core.Entities;
 
 namespace RoyalParking.API.DataContext;
 

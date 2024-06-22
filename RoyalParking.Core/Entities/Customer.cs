@@ -1,4 +1,4 @@
-﻿namespace RoyalParking.API.Entities;
+﻿namespace RoyalParking.Core.Entities;
 
 public partial class Customer
 {
