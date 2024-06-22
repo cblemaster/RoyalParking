@@ -10,4 +10,5 @@ public class RegisterUserDTO : IReturnable
     public required string LastName { get; init; }
     public required string Email { get; init; }
     public required string Phone { get; init; }
+    public required string Role { get; init; }
 }
