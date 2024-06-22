@@ -1,8 +1,8 @@
-﻿using System.Diagnostics.Contracts;
+﻿using RoyalParking.Core.Interfaces;
 
 namespace RoyalParking.Core.DTO;
 
-public class UserDTO
+public class UserDTO : IReturnable
 {
     public required int Id { get; init; }
     public required string Username { get; init; }
