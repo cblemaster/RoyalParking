@@ -1,10 +1,18 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using RoyalParking.API.DataContext;
+using RoyalParking.Core.DTO;
+using RoyalParking.Core.Entities;
+using RoyalParking.Core.Interfaces;
+using RoyalParking.Core.Mappers;
+using RoyalParking.Core.Validation;
+using RoyalParking.Core.Validation.DTOValidation;
 using RoyalParking.Security;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using DbContext = RoyalParking.API.DataContext.RoyalParkingContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,13 +49,58 @@ builder.Services.AddAuthentication(x =>
     .AddPolicy("customerpolicy", policy => policy.RequireRole("customer"))
     .AddPolicy("valetpolicy", policy => policy.RequireRole("valet"))
     .AddPolicy("allrolespolicy", policy => policy.RequireRole("customer", "valet"))
-.Services.AddDbContext<RoyalParkingContext>(options =>
+.Services.AddDbContext<DbContext>(options =>
     options.UseSqlServer(connectionString))
-.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(jwtSecret))
+//.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(jwtSecret))
 .AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Welcome to Royal Parking!");
+
+app.MapPost("/user/register", async Task<Results<BadRequest<InvalidInputResponse>, Created<UserDTO>, ProblemHttpResult>>  (DbContext context, RegisterUserDTO dto, IPasswordHasher passwordHasher) =>
+{
+    // validate the dto
+    IEnumerable<ValidationResult> validationResults = ValidateRegisterUserDTO.Validate(dto);
+    if (validationResults.Any(v => !v.IsValid))
+    {
+        return TypedResults.BadRequest(new InvalidInputResponse()
+            { Message = GetErrorsAsString(validationResults) });
+    }
+    // hash the password
+    PasswordHash hash = passwordHasher.ComputeHash(dto.Password);
+
+    // create the user entity
+        User createUser = DTOToEntity.MapRegisterUserDTOToUser(dto);
+        createUser.PasswordHash = hash.Password;
+        createUser.Salt = hash.Salt;
+        createUser.CreateDate = DateTime.Now;
+
+        if (dto.Role == "customer") { createUser.Customer = new(); }
+        else if (dto.Role == "valet") { createUser.Valet = new(); }
+    
+    // add the user entity to the db
+    try
+    {
+        context.Users.Add(createUser);
+        await context.SaveChangesAsync();
+
+        return TypedResults.Created("", EntityToDTO.MapUserToUserDTO(await context.
+            Users.Include(u => u.Customer).Include(u => u.Valet)
+            .SingleOrDefaultAsync(u => u.Id == createUser.Id)));
+    }
+    catch (Exception)
+    {
+        return TypedResults.Problem("Error registering the new user");
+    }
+});
+
+string GetErrorsAsString(IEnumerable<ValidationResult> validationResults)
+{
+    StringBuilder sb = new();
+    validationResults.ToList().ForEach(vr => sb.AppendLine(vr.ErrorMessage));
+    return sb.ToString();
+}
 
 app.Run();
+
