@@ -14,8 +14,6 @@ internal static class StringValidators
         return false;
     }
 
-    internal static bool IsStringAllNumerals(this string value)
-    {
-        return value.ToCharArray().All(c => Regex.Match(c.ToString(), "[0-9]").Success);
-    }
+    internal static bool IsStringAllNumerals(this string value) =>
+        value.ToCharArray().All(c => Regex.Match(c.ToString(), "[0-9]").Success);
 }

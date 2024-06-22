@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RoyalParking.Core.DTO;
 using RoyalParking.Core.Entities;
-using RoyalParking.Core.Interfaces;
 using RoyalParking.Core.Mappers;
 using RoyalParking.Core.Validation;
 using RoyalParking.Core.Validation.DTOValidation;
@@ -58,27 +56,30 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Welcome to Royal Parking!");
 
-app.MapPost("/user/register", async Task<Results<BadRequest<InvalidInputResponse>, Created<UserDTO>, ProblemHttpResult>>  (DbContext context, RegisterUserDTO dto, IPasswordHasher passwordHasher) =>
+app.MapPost("/user/register", async Task<Results<BadRequest<InvalidInputResponse>,
+    Created<UserDTO>, ProblemHttpResult>> (DbContext context, RegisterUserDTO dto, 
+    IPasswordHasher passwordHasher) =>
 {
     // validate the dto
-    IEnumerable<ValidationResult> validationResults = ValidateRegisterUserDTO.Validate(dto);
+    IEnumerable<ValidationResult> validationResults = 
+        ValidateRegisterUserDTO.Validate(dto);
     if (validationResults.Any(v => !v.IsValid))
     {
         return TypedResults.BadRequest(new InvalidInputResponse()
-            { Message = GetErrorsAsString(validationResults) });
+        { Message = GetErrorsAsString(validationResults) });
     }
     // hash the password
     PasswordHash hash = passwordHasher.ComputeHash(dto.Password);
 
     // create the user entity
-        User createUser = DTOToEntity.MapRegisterUserDTOToUser(dto);
-        createUser.PasswordHash = hash.Password;
-        createUser.Salt = hash.Salt;
-        createUser.CreateDate = DateTime.Now;
+    User createUser = DTOToEntity.MapRegisterUserDTOToUser(dto);
+    createUser.PasswordHash = hash.Password;
+    createUser.Salt = hash.Salt;
+    createUser.CreateDate = DateTime.Now;
 
-        if (dto.Role == "customer") { createUser.Customer = new(); }
-        else if (dto.Role == "valet") { createUser.Valet = new(); }
-    
+    if (dto.Role == "customer") { createUser.Customer = new(); }
+    else if (dto.Role == "valet") { createUser.Valet = new(); }
+
     // add the user entity to the db
     try
     {
