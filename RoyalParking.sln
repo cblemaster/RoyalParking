@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoyalParking.Core", "RoyalP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoyalParking.Security", "RoyalParking.Security\RoyalParking.Security.csproj", "{3A857144-B649-4504-977D-ECD44A79DA82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoyalParking.API", "RoyalParking.API\RoyalParking.API.csproj", "{7D557FAB-503B-4D6C-8F37-A3B27EFCCAED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3A857144-B649-4504-977D-ECD44A79DA82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A857144-B649-4504-977D-ECD44A79DA82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A857144-B649-4504-977D-ECD44A79DA82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D557FAB-503B-4D6C-8F37-A3B27EFCCAED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D557FAB-503B-4D6C-8F37-A3B27EFCCAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D557FAB-503B-4D6C-8F37-A3B27EFCCAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D557FAB-503B-4D6C-8F37-A3B27EFCCAED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
