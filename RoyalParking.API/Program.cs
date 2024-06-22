@@ -57,11 +57,11 @@ var app = builder.Build();
 app.MapGet("/", () => "Welcome to Royal Parking!");
 
 app.MapPost("/user/register", async Task<Results<BadRequest<InvalidInputResponse>,
-    Created<UserDTO>, ProblemHttpResult>> (DbContext context, RegisterUserDTO dto, 
+    Created<UserDTO>, ProblemHttpResult>> (DbContext context, RegisterUserDTO dto,
     IPasswordHasher passwordHasher) =>
 {
     // validate the dto
-    IEnumerable<ValidationResult> validationResults = 
+    IEnumerable<ValidationResult> validationResults =
         ValidateRegisterUserDTO.Validate(dto);
     if (validationResults.Any(v => !v.IsValid))
     {
@@ -86,7 +86,7 @@ app.MapPost("/user/register", async Task<Results<BadRequest<InvalidInputResponse
         context.Users.Add(createUser);
         await context.SaveChangesAsync();
 
-        return TypedResults.Created($"/user/{createUser.Id}", 
+        return TypedResults.Created($"/user/{createUser.Id}",
             EntityToDTO.MapUserToUserDTO(await context.
                 Users.Include(u => u.Customer).Include(u => u.Valet)
                 .SingleOrDefaultAsync(u => u.Id == createUser.Id)));
@@ -97,7 +97,7 @@ app.MapPost("/user/register", async Task<Results<BadRequest<InvalidInputResponse
     }
 });
 
-app.MapPost("/user/login", async Task<Results<BadRequest<InvalidInputResponse>, 
+app.MapPost("/user/login", async Task<Results<BadRequest<InvalidInputResponse>,
     UnauthorizedHttpResult, Created<UserDTO>>> (DbContext context, LoginUserDTO loginDTO,
     IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator) =>
 {
@@ -120,15 +120,15 @@ app.MapPost("/user/login", async Task<Results<BadRequest<InvalidInputResponse>,
         return TypedResults.Unauthorized();
     }
 
-    if (!passwordHasher.VerifyHashMatch(existingUser.PasswordHash, 
+    if (!passwordHasher.VerifyHashMatch(existingUser.PasswordHash,
         loginDTO.Password, existingUser.Salt))
     {
         return TypedResults.Unauthorized();
     }
     else
     {
-        string token = tokenGenerator.GenerateToken(existingUser.Id, 
-            existingUser.Username, 
+        string token = tokenGenerator.GenerateToken(existingUser.Id,
+            existingUser.Username,
             existingUser.Customer is not null ? "customer"
             : (existingUser.Valet is not null ? "valet" : "unknown role"));
 

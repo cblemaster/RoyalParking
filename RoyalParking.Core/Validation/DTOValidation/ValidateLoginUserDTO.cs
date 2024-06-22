@@ -23,7 +23,7 @@ public static class ValidateLoginUserDTO
                 ErrorMessage = "Password is required and has a max length of 50 characters."
             });
         }
-        
+
         errors.Add(new() { IsValid = true, ErrorMessage = string.Empty });
         return errors;
     }
