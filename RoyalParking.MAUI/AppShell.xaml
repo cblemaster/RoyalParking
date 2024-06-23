@@ -8,9 +8,10 @@
     Shell.FlyoutBehavior="Disabled"
     Title="RoyalParking">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate pages:RegisterPage}"
-        Route="RegisterPage" />
-
+    <TabBar>
+        <ShellContent Title="Register" ContentTemplate="{DataTemplate pages:RegisterPage}"
+                      Route="RegisterPage" />
+        <ShellContent Title="Login" ContentTemplate="{DataTemplate pages:LoginPage}"
+                      Route="LoginPage" />
+    </TabBar>
 </Shell>

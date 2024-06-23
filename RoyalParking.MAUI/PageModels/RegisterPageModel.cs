@@ -46,7 +46,7 @@ namespace RoyalParking.MAUI.PageModels
             if (registerResult is UserDTO)
             {
                 await Shell.Current.DisplayAlert("Success!", "You have been registered as a new user and will be redirected to the login page.", "OK");
-                return;
+                await Shell.Current.GoToAsync("///LoginPage");
             }
         }
 

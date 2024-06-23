@@ -22,7 +22,9 @@ public static class MauiProgram
             .Services.AddSingleton<AppShell>()
                      .AddSingleton<IAuthenticationService, HttpAuthenticationService>()
                      .AddTransient<RegisterPageModel>()
-                     .AddTransient<RegisterPage>();
+                     .AddTransient<RegisterPage>()
+                     .AddTransient<LoginPageModel>()
+                     .AddTransient<LoginPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

@@ -71,16 +71,24 @@ public class HttpAuthenticationService : HttpServiceBase, IAuthenticationService
             if (!response.IsSuccessStatusCode)
             {
                 return response.StatusCode == System.Net.HttpStatusCode.BadRequest
-                    ? new NotFound() { Message = await response.Content.ReadAsStringAsync() ?? string.Empty }
+                    ? new BadRequest() { Message = await response.Content.ReadAsStringAsync() ?? string.Empty }
                     : response.StatusCode == System.Net.HttpStatusCode.Unauthorized
                         ? new Unauthorized() { Message = "Login failed." }
                         : new Error() { Message = "An unknown error occured" };
             }
             else
             {
-                return (response.Content is not null
-                    ? await response.Content.ReadFromJsonAsync<UserDTO>()
-                    : new Error() { Message = "An unknown error occured" })!;
+                if (response.Content is not null)
+                {
+                    UserDTO dto = (await response.Content.ReadFromJsonAsync<UserDTO>())!;
+                    if (dto is not null)
+                    {
+                        UserService.SetLogin(dto);
+                        return dto;
+                    }                    
+                }
+
+                return new Error() { Message = "An unknown error occured" };
             }
         }
         catch (Exception) { throw; }
