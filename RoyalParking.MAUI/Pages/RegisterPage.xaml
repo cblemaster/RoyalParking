@@ -50,7 +50,7 @@
         <Picker ItemsSource="{Binding Roles, Mode=OneWay}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" />
         <HorizontalStackLayout Style="{StaticResource ButtonRowHorizontalStackLayoutStyle}">
             <Button Command="{Binding RegisterCommand, Mode=OneWay}" Text="Register" />
-            <Button Text="Cancel" />
+            <Button Command="{Binding CancelCommand, Mode=OneWay}" Text="Cancel" />
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

@@ -12,18 +12,14 @@ public partial class LoginPageModel(IAuthenticationService authService) : PageMo
     private LoginUserDTO loginUser = default!;
 
     [RelayCommand]
-    private void PageAppearing()
-    {
-        LoginUser = new();
-
-    }
+    private void PageAppearing() => LoginUser = new();
 
     [RelayCommand]
     private async Task LoginAsync()
     {
         IReturnable loginResult = await _authService.LogInAsync(LoginUser);
 
-        if (loginResult == null)
+        if (loginResult is null)
         {
             await Shell.Current.DisplayAlert("Error!", "An unknown error has occured.", "OK");
             return;
@@ -42,6 +38,5 @@ public partial class LoginPageModel(IAuthenticationService authService) : PageMo
     }
 
     [RelayCommand]
-    private void Cancel()
-    { }
+    private void Cancel() => PageAppearing();
 }

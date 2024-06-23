@@ -24,7 +24,6 @@ namespace RoyalParking.MAUI.PageModels
             CreateUser = new();
             Roles = ["Customer", "Valet"];
             SelectedRole = null!;
-
         }
 
         [RelayCommand]
@@ -32,7 +31,7 @@ namespace RoyalParking.MAUI.PageModels
         {
             CreateUser.Role = SelectedRole;
             IReturnable registerResult = await _authService.RegisterAsync(CreateUser);
-            if (registerResult == null)
+            if (registerResult is null)
             {
                 await Shell.Current.DisplayAlert("Error!", "An unknown error has occured.", "OK");
                 return;
@@ -51,7 +50,6 @@ namespace RoyalParking.MAUI.PageModels
         }
 
         [RelayCommand]
-        private void Cancel()
-        { }
+        private void Cancel() => PageAppearing();
     }
 }

@@ -24,7 +24,7 @@
         </Entry>        
         <HorizontalStackLayout Style="{StaticResource ButtonRowHorizontalStackLayoutStyle}">
             <Button Command="{Binding LoginCommand, Mode=OneWay}" Text="Login" />
-            <Button Text="Cancel" />
+            <Button Command="{Binding CancelCommand, Mode=OneWay}" Text="Cancel" />
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
