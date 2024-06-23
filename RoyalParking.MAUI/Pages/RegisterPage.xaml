@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RoyalParking.MAUI.Pages.RegisterPage"
+             xmlns:pageModels="clr-namespace:RoyalParking.MAUI.PageModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="{x:Type pageModels:RegisterPageModel}"
+             Title="Register">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearingCommand, Mode=OneWay}" />
+    </ContentPage.Behaviors>
+    <VerticalStackLayout Spacing="5" HorizontalOptions="Center" WidthRequest="300">
+        <Label Text="Username" />
+        <Entry Text="{Binding CreateUser.Username, Mode=TwoWay}" />
+        <Label Text="Password" />
+        <Entry Text="{Binding CreateUser.Password, Mode=TwoWay}" IsPassword="True" />
+        <Label Text="First Name" />
+        <Entry Text="{Binding CreateUser.FirstName, Mode=TwoWay}" />
+        <Label Text="Last Name" />
+        <Entry Text="{Binding CreateUser.LastName, Mode=TwoWay}" />
+        <Label Text="Email" />
+        <Entry Text="{Binding CreateUser.Email, Mode=TwoWay}" />
+        <Label Text="Phone" />
+        <Entry Text="{Binding CreateUser.Phone, Mode=TwoWay}" />
+        <Label Text="Role" />
+        <Picker ItemsSource="{Binding Roles, Mode=OneWay}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" />
+        <HorizontalStackLayout Spacing="5">
+            <Button Command="{Binding RegisterCommand, Mode=OneWay}" Text="Register" />
+            <Button Text="Cancel" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

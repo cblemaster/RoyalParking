@@ -2,11 +2,11 @@
 
 public class RegisterUserDTO
 {
-    public required string Username { get; init; }
-    public required string Password { get; init; }
-    public required string FirstName { get; init; }
-    public required string LastName { get; init; }
-    public required string Email { get; init; }
-    public required string Phone { get; init; }
-    public required string Role { get; init; }
+    public string Username { get; set; } = default!;
+    public string Password { get; set; } = default!;
+    public string FirstName { get; set; } = default!;
+    public string LastName { get; set; } = default!;
+    public string Email { get; set; } = default!;
+    public string Phone { get; set; } = default!;
+    public string Role { get; set; } = default!;
 }

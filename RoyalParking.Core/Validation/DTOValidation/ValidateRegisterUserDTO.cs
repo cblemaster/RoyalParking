@@ -63,6 +63,14 @@ public static class ValidateRegisterUserDTO
                 ErrorMessage = "Phone must be all numerals."
             });
         }
+        if (!dto.Role.IsStringLengthValid(isRequired: true, maxLength: 10))
+        {
+            errors.Add(new()
+            {
+                IsValid = false,
+                ErrorMessage = "Role is required."
+            });
+        }
         // TODO: Unique for username, email, phone
         errors.Add(new() { IsValid = true, ErrorMessage = string.Empty });
         return errors;

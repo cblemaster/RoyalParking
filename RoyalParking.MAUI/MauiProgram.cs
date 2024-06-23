@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using RoyalParking.Core.Services.User;
+using RoyalParking.MAUI.PageModels;
+using RoyalParking.MAUI.Pages;
 
 namespace RoyalParking.MAUI;
 
@@ -18,10 +20,12 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             })
             .Services.AddSingleton<AppShell>()
-                     .AddSingleton<IAuthenticationService, HttpAuthenticationService>();
+                     .AddSingleton<IAuthenticationService, HttpAuthenticationService>()
+                     .AddTransient<RegisterPageModel>()
+                     .AddTransient<RegisterPage>();
 
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
         return builder.Build();
