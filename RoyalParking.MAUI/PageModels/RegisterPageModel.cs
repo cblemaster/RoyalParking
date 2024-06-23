@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoyalParking.Core.DTO;
 using RoyalParking.Core.Interfaces;
@@ -29,10 +28,10 @@ namespace RoyalParking.MAUI.PageModels
         }
 
         [RelayCommand]
-        private async Task Register()
+        private async Task RegisterAsync()
         {
             CreateUser.Role = SelectedRole;
-            IReturnable registerResult = await _authService.Register(CreateUser);
+            IReturnable registerResult = await _authService.RegisterAsync(CreateUser);
             if (registerResult == null)
             {
                 await Shell.Current.DisplayAlert("Error!", "An unknown error has occured.", "OK");

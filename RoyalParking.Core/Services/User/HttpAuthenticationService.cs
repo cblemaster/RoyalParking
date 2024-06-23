@@ -9,7 +9,7 @@ namespace RoyalParking.Core.Services.User;
 
 public class HttpAuthenticationService : HttpServiceBase, IAuthenticationService
 {
-    public async Task<IReturnable> GetUserById(int id)
+    public async Task<IReturnable> GetUserByIdAsync(int id)
     {
         SetRequestHeaders();
 
@@ -25,7 +25,7 @@ public class HttpAuthenticationService : HttpServiceBase, IAuthenticationService
         catch (Exception) { throw; }
     }
 
-    public async Task<IEnumerable<IReturnable>> GetUsers()
+    public async Task<IEnumerable<IReturnable>> GetUsersAsync()
     {
         SetRequestHeaders();
 
@@ -40,7 +40,7 @@ public class HttpAuthenticationService : HttpServiceBase, IAuthenticationService
         catch (Exception) { throw; }
     }
 
-    public async Task<IReturnable> Register(RegisterUserDTO registerUser)
+    public async Task<IReturnable> RegisterAsync(RegisterUserDTO registerUser)
     {
         StringContent content = new(JsonSerializer.Serialize(registerUser));
         content.Headers.ContentType = new("application/json");
@@ -60,7 +60,7 @@ public class HttpAuthenticationService : HttpServiceBase, IAuthenticationService
         catch (Exception) { throw; }
     }
 
-    public async Task<IReturnable> LogIn(LoginUserDTO logInUser)
+    public async Task<IReturnable> LogInAsync(LoginUserDTO logInUser)
     {
         StringContent content = new(JsonSerializer.Serialize(logInUser));
         content.Headers.ContentType = new("application/json");

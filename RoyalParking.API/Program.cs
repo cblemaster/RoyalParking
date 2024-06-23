@@ -76,8 +76,11 @@ app.MapPost("/user/register", async Task<Results<BadRequest<string>,
     createUser.Salt = hash.Salt;
     createUser.CreateDate = DateTime.Now;
 
-    if (dto.Role.ToLower() == "customer") { createUser.Customer = new(); }
-    else if (dto.Role.ToLower() == "valet") { createUser.Valet = new(); }
+    if (dto.Role.Equals("customer", StringComparison.CurrentCultureIgnoreCase))
+    { createUser.Customer = new(); }
+    
+    else if (dto.Role.Equals("valet", StringComparison.CurrentCultureIgnoreCase))
+    { createUser.Valet = new(); }
 
     // add the user entity to the db
     try

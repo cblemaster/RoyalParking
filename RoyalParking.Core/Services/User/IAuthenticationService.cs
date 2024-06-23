@@ -5,10 +5,10 @@ namespace RoyalParking.Core.Services.User;
 
 public interface IAuthenticationService
 {
-    Task<IReturnable> GetUserById(int id);
-    Task<IEnumerable<IReturnable>> GetUsers();
-    Task<IReturnable> Register(RegisterUserDTO registerUser);
+    Task<IReturnable> GetUserByIdAsync(int id);
+    Task<IEnumerable<IReturnable>> GetUsersAsync();
+    Task<IReturnable> RegisterAsync(RegisterUserDTO registerUser);
 
-    Task<IReturnable> LogIn(LoginUserDTO logInUser);
+    Task<IReturnable> LogInAsync(LoginUserDTO logInUser);
     static void LogOut() => UserService.SetLogin(null!);
 }
