@@ -138,6 +138,22 @@ app.MapPost("/user/login", async Task<Results<BadRequest<string>,
     }
 });
 
+app.MapGet("/user/{id:int}", async Task<Results<NotFound<string>, Ok<UserDTO>>>
+    (DbContext context, int id) =>
+{
+    return await context.Users
+        .Include(u => u.Customer).Include(u => u.Valet)
+        .SingleOrDefaultAsync(u => u.Id == id) is User user
+            ? TypedResults.Ok(EntityToDTO.MapUserToUserDTO(user))
+            : TypedResults.NotFound($"User with id {id} not found.");
+});
+
+app.MapGet("user", Ok<IEnumerable<UserDTO>> (DbContext context) =>
+{
+    return TypedResults.Ok(EntityToDTO.CollectionMapUserToUserDTO(
+        (context.Users.Include(u => u.Customer).Include(u => u.Valet))));
+});
+
 string GetErrorsAsString(IEnumerable<ValidationResult> validationResults)
 {
     StringBuilder sb = new();
@@ -146,4 +162,3 @@ string GetErrorsAsString(IEnumerable<ValidationResult> validationResults)
 }
 
 app.Run();
-

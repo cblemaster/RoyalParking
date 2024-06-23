@@ -21,4 +21,11 @@ public static class EntityToDTO
             ValetId = entity.Valet?.Id,
         };
     }
+
+    public static IEnumerable<UserDTO> CollectionMapUserToUserDTO(IEnumerable<User> entities)
+    {
+        List<UserDTO> dtos = [];
+        entities.ToList().ForEach(e => dtos.Add(MapUserToUserDTO(e)));
+        return dtos;
+    }
 }
