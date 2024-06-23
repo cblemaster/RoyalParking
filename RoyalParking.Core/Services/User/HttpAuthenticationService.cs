@@ -85,7 +85,7 @@ public class HttpAuthenticationService : HttpServiceBase, IAuthenticationService
                     {
                         UserService.SetLogin(dto);
                         return dto;
-                    }                    
+                    }
                 }
 
                 return new Error() { Message = "An unknown error occured" };

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="RoyalParking.MAUI.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:RoyalParking.MAUI"
-    xmlns:pages="clr-namespace:RoyalParking.MAUI.Pages"
-    Shell.FlyoutBehavior="Disabled"
-    Title="RoyalParking">
-
+<Shell x:Class="RoyalParking.MAUI.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:RoyalParking.MAUI"
+       xmlns:pages="clr-namespace:RoyalParking.MAUI.Pages"
+       Shell.FlyoutBehavior="Disabled"
+       Title="Royal Parking">
     <TabBar>
-        <ShellContent Title="Register" ContentTemplate="{DataTemplate pages:RegisterPage}"
+        <ShellContent IsVisible="True" Title="Register" 
+                      ContentTemplate="{DataTemplate pages:RegisterPage}"
                       Route="RegisterPage" />
-        <ShellContent Title="Login" ContentTemplate="{DataTemplate pages:LoginPage}"
+        <ShellContent IsVisible="True" Title="Login" 
+                      ContentTemplate="{DataTemplate pages:LoginPage}"
                       Route="LoginPage" />
-        <ShellContent Title="Logout" ContentTemplate="{DataTemplate pages:LogoutPage}"
+        <ShellContent IsVisible="True" Title="Logout" 
+                      ContentTemplate="{DataTemplate pages:LogoutPage}"
                       Route="LogoutPage" />
     </TabBar>
 </Shell>

@@ -78,7 +78,7 @@ app.MapPost("/user/register", async Task<Results<BadRequest<string>,
 
     if (dto.Role.Equals("customer", StringComparison.CurrentCultureIgnoreCase))
     { createUser.Customer = new(); }
-    
+
     else if (dto.Role.Equals("valet", StringComparison.CurrentCultureIgnoreCase))
     { createUser.Valet = new(); }
 
@@ -116,7 +116,7 @@ app.MapPost("/user/login", async Task<Results<BadRequest<string>,
         .Include(u => u.Customer).Include(u => u.Valet)
         .SingleOrDefaultAsync(u => u.Username == loginDTO.Username))!;
 
-    if (existingUser == null)
+    if (existingUser is null)
     {
         return TypedResults.Unauthorized();
     }
