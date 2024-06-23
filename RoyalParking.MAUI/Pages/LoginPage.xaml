@@ -9,7 +9,7 @@
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearingCommand, Mode=OneWay}" />
     </ContentPage.Behaviors>
-    <VerticalStackLayout Spacing="5" HorizontalOptions="Center" WidthRequest="300">
+    <VerticalStackLayout Style="{StaticResource ContainerVerticalStackLayoutStyle}">
         <Label Text="Username" />
         <Entry Text="{Binding LoginUser.Username, Mode=TwoWay}" Placeholder="Username">
             <Entry.Behaviors>
@@ -22,7 +22,7 @@
                 <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="50" MinimumLength="1" />
             </Entry.Behaviors>
         </Entry>        
-        <HorizontalStackLayout Spacing="5">
+        <HorizontalStackLayout Style="{StaticResource ButtonRowHorizontalStackLayoutStyle}">
             <Button Command="{Binding LoginCommand, Mode=OneWay}" Text="Login" />
             <Button Text="Cancel" />
         </HorizontalStackLayout>

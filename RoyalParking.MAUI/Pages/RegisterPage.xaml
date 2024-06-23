@@ -9,7 +9,7 @@
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearingCommand, Mode=OneWay}" />
     </ContentPage.Behaviors>
-    <VerticalStackLayout Spacing="5" HorizontalOptions="Center" WidthRequest="300">
+    <VerticalStackLayout Style="{StaticResource ContainerVerticalStackLayoutStyle}">
         <Label Text="Username" />
         <Entry Text="{Binding CreateUser.Username, Mode=TwoWay}" Placeholder="Username">
             <Entry.Behaviors>
@@ -48,7 +48,7 @@
         </Entry>
         <Label Text="Role" />
         <Picker ItemsSource="{Binding Roles, Mode=OneWay}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" />
-        <HorizontalStackLayout Spacing="5">
+        <HorizontalStackLayout Style="{StaticResource ButtonRowHorizontalStackLayoutStyle}">
             <Button Command="{Binding RegisterCommand, Mode=OneWay}" Text="Register" />
             <Button Text="Cancel" />
         </HorizontalStackLayout>
