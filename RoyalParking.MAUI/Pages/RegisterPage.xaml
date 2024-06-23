@@ -11,17 +11,41 @@
     </ContentPage.Behaviors>
     <VerticalStackLayout Spacing="5" HorizontalOptions="Center" WidthRequest="300">
         <Label Text="Username" />
-        <Entry Text="{Binding CreateUser.Username, Mode=TwoWay}" />
+        <Entry Text="{Binding CreateUser.Username, Mode=TwoWay}" Placeholder="Username">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="50" MinimumLength="1" />
+            </Entry.Behaviors>
+        </Entry>
         <Label Text="Password" />
-        <Entry Text="{Binding CreateUser.Password, Mode=TwoWay}" IsPassword="True" />
+        <Entry Text="{Binding CreateUser.Password, Mode=TwoWay}" IsPassword="True" Placeholder="Password">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="50" MinimumLength="1" />
+            </Entry.Behaviors>
+        </Entry>
         <Label Text="First Name" />
-        <Entry Text="{Binding CreateUser.FirstName, Mode=TwoWay}" />
+        <Entry Text="{Binding CreateUser.FirstName, Mode=TwoWay}" Placeholder="First Name">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="255" MinimumLength="1" />
+            </Entry.Behaviors>
+        </Entry>
         <Label Text="Last Name" />
-        <Entry Text="{Binding CreateUser.LastName, Mode=TwoWay}" />
+        <Entry Text="{Binding CreateUser.LastName, Mode=TwoWay}" Placeholder="Last Name">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="255" MinimumLength="1" />
+            </Entry.Behaviors>
+        </Entry>
         <Label Text="Email" />
-        <Entry Text="{Binding CreateUser.Email, Mode=TwoWay}" />
+        <Entry Text="{Binding CreateUser.Email, Mode=TwoWay}" Placeholder="Email">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="255" MinimumLength="1" />
+            </Entry.Behaviors>
+        </Entry>
         <Label Text="Phone" />
-        <Entry Text="{Binding CreateUser.Phone, Mode=TwoWay}" />
+        <Entry Text="{Binding CreateUser.Phone, Mode=TwoWay}" Placeholder="Phone">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="10" MinimumLength="1" />
+            </Entry.Behaviors>
+        </Entry>
         <Label Text="Role" />
         <Picker ItemsSource="{Binding Roles, Mode=OneWay}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" />
         <HorizontalStackLayout Spacing="5">

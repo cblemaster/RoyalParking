@@ -1,6 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoyalParking.Core.DTO;
+using RoyalParking.Core.Interfaces;
 using RoyalParking.Core.Services.User;
 using System.Collections.ObjectModel;
 
@@ -21,15 +23,32 @@ namespace RoyalParking.MAUI.PageModels
         private void PageAppearing()
         {
             CreateUser = new();
-            Roles = new() { "Customer", "Valet" };
+            Roles = ["Customer", "Valet"];
             SelectedRole = null!;
+
         }
-        
+
         [RelayCommand]
-        private void Register()
+        private async Task Register()
         {
             CreateUser.Role = SelectedRole;
-            _authService.Register(CreateUser);
+            IReturnable registerResult = await _authService.Register(CreateUser);
+            if (registerResult == null)
+            {
+                await Shell.Current.DisplayAlert("Error!", "An unknown error has occured.", "OK");
+                return;
+            }
+            if (registerResult is IResponse)
+            {
+                // TODO: format the message
+                await Shell.Current.DisplayAlert("Error!", $"The following error(s) occured: {(registerResult as IResponse).Message}", "OK");
+                return;
+            }
+            if (registerResult is UserDTO)
+            {
+                await Shell.Current.DisplayAlert("Success!", "You have been registered as a new user and will be redirected to the login page.", "OK");
+                return;
+            }
         }
 
         [RelayCommand]

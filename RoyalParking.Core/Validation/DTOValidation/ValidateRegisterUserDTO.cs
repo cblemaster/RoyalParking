@@ -55,7 +55,7 @@ public static class ValidateRegisterUserDTO
                 ErrorMessage = "Phone is required and must be 10 characters."
             });
         }
-        if (!dto.Phone.IsStringAllNumerals())
+        else if (!dto.Phone.IsStringAllNumerals())
         {
             errors.Add(new()
             {

@@ -50,7 +50,7 @@ public class HttpAuthenticationService : HttpServiceBase, IAuthenticationService
             HttpResponseMessage response = await _client.PostAsync($"/user/register", content);
             return !response.IsSuccessStatusCode
                 ? response.StatusCode == System.Net.HttpStatusCode.BadRequest
-                    ? new NotFound() { Message = await response.Content.ReadAsStringAsync() ?? string.Empty }
+                    ? new BadRequest() { Message = await response.Content.ReadAsStringAsync() ?? string.Empty }
                     : new Error() { Message = "An unknown error occured" }
                 : response.Content is not null
                 ? await response.Content.ReadFromJsonAsync<UserDTO>() as IReturnable
