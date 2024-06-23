@@ -88,7 +88,7 @@ app.MapPost("/user/register", async Task<Results<BadRequest<string>,
         return TypedResults.Created($"/user/{createUser.Id}",
             EntityToDTO.MapUserToUserDTO(await context.
                 Users.Include(u => u.Customer).Include(u => u.Valet)
-                .SingleOrDefaultAsync(u => u.Id == createUser.Id)));
+                .SingleOrDefaultAsync(u => u.Id == createUser.Id) ?? new()));
     }
     catch (Exception)
     {
@@ -111,7 +111,7 @@ app.MapPost("/user/login", async Task<Results<BadRequest<string>,
     // look for a matching user by username
     User existingUser = (await context.Users
         .Include(u => u.Customer).Include(u => u.Valet)
-        .SingleOrDefaultAsync(u => u.Username == loginDTO.Username));
+        .SingleOrDefaultAsync(u => u.Username == loginDTO.Username))!;
 
     if (existingUser == null)
     {
@@ -139,20 +139,15 @@ app.MapPost("/user/login", async Task<Results<BadRequest<string>,
 });
 
 app.MapGet("/user/{id:int}", async Task<Results<NotFound<string>, Ok<UserDTO>>>
-    (DbContext context, int id) =>
-{
-    return await context.Users
+    (DbContext context, int id) => await context.Users
         .Include(u => u.Customer).Include(u => u.Valet)
         .SingleOrDefaultAsync(u => u.Id == id) is User user
             ? TypedResults.Ok(EntityToDTO.MapUserToUserDTO(user))
-            : TypedResults.NotFound($"User with id {id} not found.");
-});
+            : TypedResults.NotFound($"User with id {id} not found."));
 
 app.MapGet("user", Ok<IEnumerable<UserDTO>> (DbContext context) =>
-{
-    return TypedResults.Ok(EntityToDTO.CollectionMapUserToUserDTO(
-        (context.Users.Include(u => u.Customer).Include(u => u.Valet))));
-});
+    TypedResults.Ok(EntityToDTO.CollectionMapUserToUserDTO(
+        (context.Users.Include(u => u.Customer).Include(u => u.Valet)))));
 
 string GetErrorsAsString(IEnumerable<ValidationResult> validationResults)
 {
