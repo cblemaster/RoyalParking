@@ -24,7 +24,9 @@ public static class MauiProgram
                      .AddTransient<RegisterPageModel>()
                      .AddTransient<RegisterPage>()
                      .AddTransient<LoginPageModel>()
-                     .AddTransient<LoginPage>();
+                     .AddTransient<LoginPage>()
+                     .AddTransient<LogoutPageModel>()
+                     .AddTransient<LogoutPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

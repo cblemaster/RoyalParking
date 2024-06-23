@@ -13,5 +13,7 @@
                       Route="RegisterPage" />
         <ShellContent Title="Login" ContentTemplate="{DataTemplate pages:LoginPage}"
                       Route="LoginPage" />
+        <ShellContent Title="Logout" ContentTemplate="{DataTemplate pages:LogoutPage}"
+                      Route="LogoutPage" />
     </TabBar>
 </Shell>
