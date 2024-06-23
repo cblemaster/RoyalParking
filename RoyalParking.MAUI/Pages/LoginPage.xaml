@@ -7,19 +7,31 @@
              x:DataType="{x:Type pageModels:LoginPageModel}"
              Title="Login">
     <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearingCommand, Mode=OneWay}" />
+        <toolkit:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding PageAppearingCommand, Mode=OneWay}" />
     </ContentPage.Behaviors>
     <VerticalStackLayout Style="{StaticResource ContainerVerticalStackLayoutStyle}">
         <Label Text="Username" />
         <Entry Text="{Binding LoginUser.Username, Mode=TwoWay}" Placeholder="Username">
             <Entry.Behaviors>
-                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="50" MinimumLength="1" />
+                <toolkit:TextValidationBehavior
+                    InvalidStyle="{StaticResource InvalidEntryStyle}"
+                    Flags="ValidateOnValueChanged"
+                    MaximumLength="50"
+                    MinimumLength="1" />
             </Entry.Behaviors>
         </Entry>
         <Label Text="Password" />
-        <Entry Text="{Binding LoginUser.Password, Mode=TwoWay}" IsPassword="True" Placeholder="Password">
+        <Entry Text="{Binding LoginUser.Password, Mode=TwoWay}"
+               IsPassword="True"
+               Placeholder="Password">
             <Entry.Behaviors>
-                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="50" MinimumLength="1" />
+                <toolkit:TextValidationBehavior
+                    InvalidStyle="{StaticResource InvalidEntryStyle}"
+                    Flags="ValidateOnValueChanged"
+                    MaximumLength="50"
+                    MinimumLength="1" />
             </Entry.Behaviors>
         </Entry>        
         <HorizontalStackLayout Style="{StaticResource ButtonRowHorizontalStackLayoutStyle}">
