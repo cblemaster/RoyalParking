@@ -1,6 +1,6 @@
 ﻿namespace RoyalParking.Core.Interfaces;
 
-public interface IResponse
+internal interface IResponse
 {
     string Message { get; init; }
 }

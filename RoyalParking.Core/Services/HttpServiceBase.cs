@@ -1,6 +1,6 @@
 ﻿namespace RoyalParking.Core.Services;
 
-public class HttpServiceBase
+public abstract class HttpServiceBase
 {
     internal readonly HttpClient _client;
     private const string BASE_URI = "https://localhost:7230/";
