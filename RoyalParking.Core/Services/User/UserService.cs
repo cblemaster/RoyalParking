@@ -8,9 +8,9 @@ public static class UserService
 
     public static void SetLogin(UserDTO u) => user = u;
 
-    public static int GetUserId() => user.Id;
+    public static int GetUserId() => user is not null ? user.Id : 0;
 
-    public static bool IsLoggedIn() => !string.IsNullOrWhiteSpace(user.Token);
+    public static bool IsLoggedIn() => user is not null && !string.IsNullOrWhiteSpace(user.Token);
 
     public static string GetToken() => user?.Token ?? string.Empty;
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RoyalParking.MAUI.Pages.AboutPage"
+             Title="About">
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource ContainerVerticalStackLayoutStyle}" WidthRequest="600" Spacing="10">
+            <Label Text="Welcome to Royal Parking, where every customer is treated like Royalty!" FontSize="20" Margin="0,5,0,0" FontAttributes="Bold" TextColor="{StaticResource PrimaryDarkText}" />
+            <Label Text="Located at 141 Court Street, Cincinnati Ohio, our private parking lot has been here for 40 years. Each of our parking spots is in a covered structure, and our friendly valets will park your vehicle, and return it when you request." TextColor="{StaticResource Primary}" />
+            <Label Text="Royal Parking is owned and operated by Al Carlisle, who also founded the company. Mr. Carlisle is a long time Cincinnati businessman, and in a recent interview, Mr. Carlisle stated that Royal Parking has parked well over a million cars!" TextColor="{StaticResource Primary}" />
+            <Label Text="This handy application makes Royal Parking easy to engage for our customers. As a customer, you can register as a new user and create your log in credentials. Once logged in, you can add a list of your vehicles, making check in at our parking lot quick and simple." TextColor="{StaticResource Primary}" />
+            <Label Text="Also, as a customer you can view parking availability for our entire parking lot. (We have customers who park with us frequently, and sometimes our lot does fill up!) You can request parking, and our valets take it from there. Your vehicle is safe with our expert, professional valets. When you are ready to pick up your vehicle, our valets make that easy too." TextColor="{StaticResource Primary}" />
+            <Label Text="At any time, as a customer you can see your vehicle's status at our parking lot: from parking requested to parked, from vehicle return requested to vehicle returned." TextColor="{StaticResource Primary}" />
+            <Label Text="If you are a valet at Royal Parking, you can register as a new user and create your log in credentials. Once logged in, you can view parking availability and also details on the vehicles currently parked with us. And as a valet, you can see and respond to customer requests for parking, or for vehicle return; you can accept a customer's payment and produce a parking slip to the customer." TextColor="{StaticResource Primary}" />
+            <Label Text="Our rates are $7 per hour on weekdays, $9 per hour on Saturday and Sunday, and $14 per hour during special events. And we have discounts for active and former military, seniors aged 65 and older, and for current college students (student ID required)." TextColor="{StaticResource Primary}" />
+            <Label Text="Every day is a great day at Royal Parking!" FontSize="18" Margin="0,0,0,5" FontAttributes="Bold" TextColor="{StaticResource PrimaryDarkText}" />
+        </VerticalStackLayout>
+    </ScrollView>    
+</ContentPage>

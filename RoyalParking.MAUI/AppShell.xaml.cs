@@ -1,7 +1,13 @@
-﻿namespace RoyalParking.MAUI
+﻿using RoyalParking.MAUI.PageModels;
+
+namespace RoyalParking.MAUI
 {
     public partial class AppShell : Shell
     {
-        public AppShell() => InitializeComponent();
+        public AppShell(AppShellModel shellModel)
+        {
+            InitializeComponent();
+            BindingContext = shellModel;
+        }
     }
 }
